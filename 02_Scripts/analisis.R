@@ -1,6 +1,11 @@
 # ESTUDIO DE COHORTE RETROSPECTIVO
 
+install.packages("epitools")
+library(epitools)
+
 respuestas <- read.csv("01_RawData/respuestas.csv") # Generar un objeto que contenga las respuestas, para no modificar el archivo original
+
+###############################################################################################################
 
 # Cribado inicial
 
@@ -31,7 +36,48 @@ conteo_n_nex <- length(negativo_no_expuesto$consentimiento)
 
 # Dataframe para el análisis
 
-grupos <- data.frame (ITS_pos = c(conteo_p_ex, conteo_p_nex), ITS_neg = c(conteo_n_ex, conteo_n_nex))
-row.names(grupos) <- c("expuestos", "no_expuestos")
-
+grupos <- data.frame (ITS_pos = c(conteo_p_nex, conteo_p_ex), ITS_neg = c(conteo_n_nex, conteo_n_ex))
+row.names(grupos) <- c("no_expuestos", "expuestos")
 grupos
+grupos <- as.matrix(grupos)
+
+###############################################################################################################
+
+# Cálculo de diferencia de riesgo
+
+prop.table(grupos, margin = 1)
+
+p.out <- prop.test(grupos)
+DR <- p.out$estimate[1] - p.out$estimate[2]
+
+print(paste("La diferencia de riesgo (DR) es de", DR))
+
+###############################################################################################################
+
+# Cálculo de coeficiente de riesgo
+
+CR <- riskratio.wald(grupos)
+
+print(paste("El coeficiente de riesgo (CR) es de", CR))
+
+###############################################################################################################
+
+# Cálculo del riesgo relativo
+
+prop.out <- prop.table(grupos, margin = 1)
+RR <- prop.out[1,1]/prop.out[2,1]
+
+print(paste("El riesgo relativo (RR) es de", RR))
+
+rr.out <- riskratio(grupos, rev="b")
+rr.out$measure # Igual da 0
+
+###############################################################################################################
+
+# Razón de momios
+
+prop.out[1,1]/prop.out[1,2]
+prop.out[2,1]/prop.out[2,2]
+
+or.out <- oddsratio(grupos, rev="b") # No se puede calcular (Error en uniroot(function(or) {: f() values at end points not of opposite sign)
+or.out$measure

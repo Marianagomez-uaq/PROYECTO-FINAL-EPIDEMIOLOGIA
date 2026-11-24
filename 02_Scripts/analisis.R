@@ -87,3 +87,12 @@ or.out$measure
 # Corregir para que sea posible calcular la razón de momios
 
 # Propuesta: “modified Haldane-Anscombe” (mHA) correction. https://onlinelibrary.wiley.com/doi/10.1002/jrsm.1460
+
+##################################################################################################################
+
+# Separar por niveles de exposión a las campañas
+niveles_exposicion <- subset (respuestas, participacion == "Escuché atentamente y/o hice preguntas (1)")
+niveles_exposicion <- subset (respuestas, participacion == "Participé en las actividades (2)")
+niveles_exposicion <- subset (respuestas, participacion == "Recibí orientación individual (5)")
+niveles_exposicion <- subset (respuestas, participacion == "Asistí, pero participé poco o nada (6)")
+niveles_exposicion <- subset (respuestas, participacion == "No lo recuerdo (7)")

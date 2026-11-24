@@ -36,8 +36,8 @@ conteo_n_nex <- length(negativo_no_expuesto$consentimiento)
 
 # Dataframe para el análisis
 
-grupos <- data.frame (ITS_pos = c(conteo_p_nex, conteo_p_ex), ITS_neg = c(conteo_n_nex, conteo_n_ex))
-row.names(grupos) <- c("no_expuestos", "expuestos")
+grupos <- data.frame (ITS_pos = c(conteo_p_ex, conteo_p_nex), ITS_neg = c(conteo_n_ex, conteo_n_nex))
+row.names(grupos) <- c("expuestos", "no_expuestos")
 grupos
 grupos <- as.matrix(grupos)
 
@@ -81,3 +81,9 @@ prop.out[2,1]/prop.out[2,2]
 
 or.out <- oddsratio(grupos, rev="b") # No se puede calcular (Error en uniroot(function(or) {: f() values at end points not of opposite sign)
 or.out$measure
+
+###############################################################################################################
+
+# Corregir para que sea posible calcular la razón de momios
+
+# Propuesta: “modified Haldane-Anscombe” (mHA) correction. https://onlinelibrary.wiley.com/doi/10.1002/jrsm.1460

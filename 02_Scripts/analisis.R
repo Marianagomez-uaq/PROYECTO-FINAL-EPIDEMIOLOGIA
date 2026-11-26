@@ -94,4 +94,4 @@ or.out$measure
 niveles_exposicion1.1 <- subset (respuestas, cuantas_campañas == "1-2 (1)")
 niveles_exposicion2.1 <- subset (respuestas, cuantas_campañas == "3-4 (2)")
 niveles_exposicion3.1 <- subset (respuestas, cuantas_campañas == "Más de 4 (3)")
-
+# filtra los datos y los junta en los diferentes niveles de exposicion
